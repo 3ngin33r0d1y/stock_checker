@@ -63,7 +63,7 @@ while True:
                     print()
 
     # Wait for 10 minutes before checking again
-    time.sleep(500)
+    time.sleep(3500)
     print("===========================================================")
     print(datetime)
     print("===========================================================")
