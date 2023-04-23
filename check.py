@@ -1,3 +1,4 @@
+import smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
 from bs4 import BeautifulSoup
@@ -46,11 +47,16 @@ while True:
                 # Check if the target phrase is in the website content or title
                 if target_phrase in content or target_phrase in title:
                     # Send email alert
-                    message = f"Subject: {link['href']} is out of stock"
+                    message = f"Subject: {title} is out of stock"
                     msg = MIMEText(message)
                     msg['From'] = email
                     msg['To'] = to_email
-                    print(f"{product_url} is out of stock")
+                    print(f"{title} is out of stock")
+
+                    with smtplib.SMTP(smtp_server, smtp_port) as server:
+                        server.starttls()
+                        server.login(to_email, smtp_password)
+                        server.sendmail(email, to_email, msg.as_string())
                 else:
                     print()
                     print(f"{title} is available")
